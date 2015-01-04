@@ -1,9 +1,15 @@
-require 'formula'
+require "formula"
 
 class Ktoblzcheck < Formula
-  homepage 'http://ktoblzcheck.sourceforge.net/'
-  url 'https://downloads.sourceforge.net/project/ktoblzcheck/ktoblzcheck-1.45.tar.gz'
-  sha1 'a552012bb219ac24dcdbac977cf94c951bfe31bc'
+  homepage "http://ktoblzcheck.sourceforge.net/"
+  url "https://downloads.sourceforge.net/project/ktoblzcheck/ktoblzcheck-1.48.tar.gz"
+  sha1 "80d1a586e2d581dce62094fed61b9292f2c72c6b"
+
+  bottle do
+    sha1 "9575535aa28c130cd738edce67a6cc95789dcf10" => :yosemite
+    sha1 "59920a94f3347e9954e8ca692730fc48900224c2" => :mavericks
+    sha1 "ce8c954020e3436d57983d7be273a5c9b1070313" => :mountain_lion
+  end
 
   def install
     system "./configure", "--disable-debug", "--disable-dependency-tracking",

@@ -2,18 +2,34 @@ require "formula"
 
 class Mesos < Formula
   homepage "http://mesos.apache.org"
-  url "http://mirror.cogentco.com/pub/apache/mesos/0.19.1/mesos-0.19.1.tar.gz"
-  sha1 "3f219313324f86e11df25688ccb86c2814ab29c5"
+  url "http://mirror.cogentco.com/pub/apache/mesos/0.20.1/mesos-0.20.1.tar.gz"
+  sha1 "8028366a2538551daaf290f7c62c4c8bfb415f61"
+
+  bottle do
+    revision 1
+    sha1 "8fe843863e10aa82cc14e4f7c9989e1296bf8e5b" => :mavericks
+    sha1 "410c88697079563e148b42d4f36ee3687e563b1d" => :mountain_lion
+  end
 
   depends_on :java => "1.7"
+  depends_on :macos => :mountain_lion
   depends_on "maven" => :build
+  # Use our Zookeeper for Yosemite and not the one shipped with Mesos
+  # Remove with next release.
+  # See https://github.com/Homebrew/homebrew/issues/32965
+  depends_on "zookeeper" if MacOS.version == :yosemite
+
 
   def install
-    system "./configure", "--disable-debug",
-                           "--disable-dependency-tracking",
-                           "--disable-silent-rules",
-                           "--prefix=#{prefix}"
+    args = ["--prefix=#{prefix}",
+            "--disable-debug",
+            "--disable-dependency-tracking",
+            "--disable-silent-rules"
+           ]
 
+    args << "--with-zookeeper=#{Formula["zookeeper"].opt_prefix}" if MacOS.version == :yosemite
+
+    system "./configure", *args
     system "make"
     system "make", "install"
   end

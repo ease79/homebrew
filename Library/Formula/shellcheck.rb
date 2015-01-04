@@ -5,14 +5,13 @@ class Shellcheck < Formula
   include Language::Haskell::Cabal
 
   homepage "http://www.shellcheck.net"
-  url "https://github.com/koalaman/shellcheck/archive/v0.3.2.tar.gz"
-  sha1 "dd030c63f16e9170eb415176d101bbd2ce66fe00"
+  url "https://github.com/koalaman/shellcheck/archive/v0.3.5.tar.gz"
+  sha1 "e2907df9a28b955bde122c4ddf144c6039c0b85d"
 
   bottle do
-    cellar :any
-    sha1 "903cdcdf9c39323152d6603bf36a48d470742805" => :mavericks
-    sha1 "78456df525113ef15a979e4a943e39eaa9643e60" => :mountain_lion
-    sha1 "e6f02857491301f0517627b103a7a719ac5521f9" => :lion
+    sha1 "487e94b0a1efe6953b4eb8163fbe3431f80f526b" => :yosemite
+    sha1 "1aa013ebd2eeb72e61f9cde87e41271abe13511e" => :mavericks
+    sha1 "af81f345a1ad58bdf1c7a742a945aba9eb3819ed" => :mountain_lion
   end
 
   depends_on "ghc" => :build
@@ -22,7 +21,7 @@ class Shellcheck < Formula
 
   def install
     install_cabal_package
-    system "make", "shellcheck.1"
+    system "pandoc", "-s", "-t", "man", "shellcheck.1.md", "-o", "shellcheck.1"
     man1.install "shellcheck.1"
   end
 
@@ -34,6 +33,6 @@ class Shellcheck < Formula
         echo "$f"
       done
     EOS
-    assert `shellcheck -f gcc #{sh}`.include? "Iterate over globs whenever possible"
+    assert `shellcheck -f gcc #{sh}`.include? "[SC2045]"
   end
 end

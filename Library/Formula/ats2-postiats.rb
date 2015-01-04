@@ -2,17 +2,21 @@ require "formula"
 
 class Ats2Postiats < Formula
   homepage "http://www.ats-lang.org/"
-  url "https://downloads.sourceforge.net/project/ats2-lang/ats2-lang/ats2-postiats-0.1.0/ATS2-Postiats-0.1.0.tgz"
-  sha1 "7767db094f7f050edf30518866892b6cd0e2277e"
+  url "https://downloads.sourceforge.net/project/ats2-lang/ats2-lang/ats2-postiats-0.1.5/ATS2-Postiats-0.1.5.tgz"
+  sha1 "8775d3ddfba30e61a50a3b3a8c7573a5dde716d1"
 
   bottle do
     cellar :any
-    sha1 "d02cf136334e7c813a8a7dd041d6b1b24f352a85" => :mavericks
-    sha1 "59786888cee7152fdaf7a27f46d98e667c313339" => :mountain_lion
-    sha1 "b544d4480ad688d9d3f1320d25c5a784a215f49d" => :lion
+    sha1 "dd6ca443572a1a752653f6917bcd956a0d49d4b5" => :yosemite
+    sha1 "752798d63c87159bd5960ad7ff6008c1322db1e2" => :mavericks
+    sha1 "325d4886ac380238ac4434d3fb5969556c2cc49d" => :mountain_lion
   end
 
   depends_on "gmp"
+
+  fails_with :clang do
+    cause "Trying to compile this with Clang is failure-galore."
+  end
 
   def install
     ENV.deparallelize
@@ -26,15 +30,11 @@ class Ats2Postiats < Formula
   end
 
   test do
-    File.open("hello.dats", "w") do |f|
-      f.write <<-EOF.undent
-        val _ = print ("Hello, world!\n")
-        implement main0 () = ()
-      EOF
-    end
+    (testpath/"hello.dats").write <<-EOS.undent
+      val _ = print ("Hello, world!\n")
+      implement main0 () = ()
+    EOS
     system "#{bin}/patscc hello.dats -o hello"
-    IO.popen("./hello", "r") do |pipe|
-      assert_match "Hello, world!", pipe.read
-    end
+    assert_match "Hello, world!", shell_output(testpath/"hello")
   end
 end

@@ -2,22 +2,22 @@ require 'formula'
 
 class GstPluginsUgly < Formula
   homepage 'http://gstreamer.freedesktop.org/'
-  url 'http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.4.0.tar.xz'
-  mirror 'http://ftp.osuosl.org/pub/blfs/svn/g/gst-plugins-ugly-1.4.0.tar.xz'
-  sha256 '5314bb60f13d1a7b9c6317df73813af5f3f15a62c7c186b816b0024b5c61744d'
+  url 'http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.4.5.tar.xz'
+  mirror 'http://ftp.osuosl.org/pub/blfs/svn/g/gst-plugins-ugly-1.4.5.tar.xz'
+  sha256 "5cd5e81cf618944f4dc935f1669b2125e8bb2fe9cc7dc8dc15b72237aca49067"
 
   bottle do
-    sha1 "a82da0b9a9d26d0e5d93c51c02b1855139210a50" => :mavericks
-    sha1 "269dcf70921dc902d887cbaf6165a66eecc4d703" => :mountain_lion
-    sha1 "38d4ff9a96a665496b72e0dcd99a1536b7489d41" => :lion
+    sha1 "4b95eec86a459f5ba50facc1f72ef1a6a899a98f" => :yosemite
+    sha1 "22f01d2f3ff5108d617a672914d8ea8a84198094" => :mavericks
+    sha1 "124a9a2a597349f0ff584725ac0ddccb379d770f" => :mountain_lion
   end
 
   head do
     url 'git://anongit.freedesktop.org/gstreamer/gst-plugins-ugly'
 
-    depends_on :autoconf
-    depends_on :automake
-    depends_on :libtool
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
   end
 
   depends_on 'pkg-config' => :build

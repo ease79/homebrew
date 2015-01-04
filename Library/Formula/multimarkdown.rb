@@ -2,9 +2,16 @@ require 'formula'
 
 class Multimarkdown < Formula
   homepage 'http://fletcherpenney.net/multimarkdown/'
-  head 'https://github.com/fletcher/MultiMarkdown-4.git', :branch => 'master'
   # Use git tag instead of the tarball to get submodules
-  url 'https://github.com/fletcher/MultiMarkdown-4.git', :tag => '4.5'
+  url 'https://github.com/fletcher/MultiMarkdown-4.git', :tag => '4.6'
+  head 'https://github.com/fletcher/MultiMarkdown-4.git'
+
+  bottle do
+    cellar :any
+    sha1 "7d7a8d34fba87f3987da64b5fe13ceff78a29372" => :yosemite
+    sha1 "10a6c6a46a72678ba24fc3b9f244c346a24a8116" => :mavericks
+    sha1 "3dbf424f3b1537ce8b8c973e5c0392af241708e9" => :mountain_lion
+  end
 
   conflicts_with 'mtools', :because => 'both install `mmd` binaries'
 
@@ -22,10 +29,6 @@ class Multimarkdown < Formula
   end
 
   test do
-    IO.popen(bin/"mmd", "w+") do |pipe|
-      pipe.write "foo *bar*\n"
-      pipe.close_write
-      assert_equal "<p>foo <em>bar</em></p>\n", pipe.read
-    end
+    assert_equal "<p>foo <em>bar</em></p>\n", pipe_output(bin/"mmd", "foo *bar*\n")
   end
 end

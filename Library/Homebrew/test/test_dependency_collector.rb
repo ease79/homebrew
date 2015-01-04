@@ -33,15 +33,8 @@ class DependencyCollectorTests < Homebrew::TestCase
   def test_dependency_tags
     assert_predicate Dependency.new('foo', [:build]), :build?
     assert_predicate Dependency.new('foo', [:build, :optional]), :optional?
-    assert_includes Dependency.new('foo', [:universal]).options, "--universal"
+    assert_includes Dependency.new('foo', ["universal"]).options, "--universal"
     assert_empty Dependency.new('foo').tags
-  end
-
-  def test_no_duplicate_dependencies
-    @d.add 'foo'
-    @d.add 'foo' => :build
-    assert_equal 1, @d.deps.count
-    assert_empty find_dependency("foo").tags
   end
 
   def test_requirement_creation

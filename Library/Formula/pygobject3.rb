@@ -2,8 +2,8 @@ require 'formula'
 
 class Pygobject3 < Formula
   homepage 'http://live.gnome.org/PyGObject'
-  url 'http://ftp.gnome.org/pub/GNOME/sources/pygobject/3.12/pygobject-3.12.2.tar.xz'
-  sha256 '7e7a3d349acf5bb4b68f8539a42e67958840a67cd4f0341ee9aa49189af2a522'
+  url 'http://ftp.gnome.org/pub/GNOME/sources/pygobject/3.14/pygobject-3.14.0.tar.xz'
+  sha256 '779effa93f4b59cdb72f4ab0128fb3fd82900bf686193b570fd3a8ce63392d54'
 
   option 'with-tests', 'run tests'
 
@@ -45,8 +45,7 @@ class Pygobject3 < Formula
     end
 
     Language::Python.each_python(build) do |python, version|
-      ENV["PYTHON"] = "#{python}" if Formula[python].installed?
-      system "./configure", "--disable-dependency-tracking", "--prefix=#{prefix}"
+      system "./configure", "--disable-dependency-tracking", "--prefix=#{prefix}", "PYTHON=#{python}"
       system "make", "install"
       system "make", "check" if build.with? 'tests'
       system "make", "clean"

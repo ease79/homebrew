@@ -1,14 +1,22 @@
-require 'formula'
+require "formula"
 
 class Szl < Formula
-  homepage 'http://code.google.com/p/szl/'
-  url 'https://szl.googlecode.com/files/szl-1.0.tar.gz'
-  sha1 'e4c6d4aec1afc025257d41dd77b8f5c25ea120d4'
+  homepage "http://code.google.com/p/szl/"
+  url "https://szl.googlecode.com/files/szl-1.0.tar.gz"
+  sha1 "e4c6d4aec1afc025257d41dd77b8f5c25ea120d4"
+  revision 3
 
-  depends_on 'binutils' # For objdump
-  depends_on 'icu4c'
-  depends_on 'protobuf'
-  depends_on 'pcre'
+  bottle do
+    cellar :any
+    sha1 "4bb28fa3ac8a317c732351eb41b4f7a0ddd24551" => :mavericks
+    sha1 "ef794a67b878a03eaee17955b036611fae2b1539" => :mountain_lion
+    sha1 "19172cbd2b18c1b15f64f1710cb4a767a8e4b3ea" => :lion
+  end
+
+  depends_on "binutils" # For objdump
+  depends_on "icu4c"
+  depends_on "protobuf"
+  depends_on "pcre"
 
   # 10.9 and clang fixes
   # Include reported upstream in:
@@ -18,7 +26,7 @@ class Szl < Formula
   patch :DATA
 
   def install
-    ENV['OBJDUMP'] = "#{HOMEBREW_PREFIX}/bin/gobjdump"
+    ENV["OBJDUMP"] = "#{HOMEBREW_PREFIX}/bin/gobjdump"
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
     system "make install"

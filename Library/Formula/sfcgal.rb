@@ -2,14 +2,15 @@ require "formula"
 
 class Sfcgal < Formula
   homepage "http://sfcgal.org/"
-  url "https://github.com/Oslandia/SFCGAL/archive/v1.0.4.tar.gz"
-  sha256 "f4660631bf42e2ed3f8b06bcd7a083f3f25e8a860a902bbb4687c60fcde1e131"
+  url "https://github.com/Oslandia/SFCGAL/archive/v1.0.5.tar.gz"
+  sha256 "a9cdaf7334bf28dc71c6338d090c1d1402041c5e320b6c2e3669f7758946a01c"
+  revision 1
 
   bottle do
-    cellar :any
-    sha1 "524a95c8fa7ab6a3a91fa0a64afcb68741e9e6c2" => :mavericks
-    sha1 "cf4160102e93cfc11d67db0bb64c2d3697cfef1f" => :mountain_lion
-    sha1 "3d957de66ac9262d61f7a0357b67e407b1961ea7" => :lion
+    revision 1
+    sha1 "1a5ade35a1dcbe31b085e93c92fbe34f52f2239c" => :yosemite
+    sha1 "eaa2e1ba6ec094304639b74a90e1f43897af5055" => :mavericks
+    sha1 "904f9e44b4da3545d8bfec3fe862a1682cbdf25f" => :mountain_lion
   end
 
   depends_on "cmake" => :build

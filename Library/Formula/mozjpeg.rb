@@ -1,28 +1,31 @@
-require "formula"
-
 class Mozjpeg < Formula
   homepage "https://github.com/mozilla/mozjpeg"
-  url "https://github.com/mozilla/mozjpeg/archive/v2.0.1.tar.gz"
-  sha1 "466d570f85ae5296eaedf89de26a5dbe6db78407"
+  url "https://github.com/mozilla/mozjpeg/releases/download/v3.0/mozjpeg-3.0-release-source.tar.gz"
+  sha1 "9b56af77ce376300e1f6de78b52b2ce9b6f19596"
 
-  head "https://github.com/mozilla/mozjpeg.git"
+  head do
+    url "https://github.com/mozilla/mozjpeg.git"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+  end
 
   bottle do
     cellar :any
-    sha1 "c478f25b3a628e0c643de2eb3e3771660c5a4532" => :mavericks
-    sha1 "0187b56d53c4535f47a88ba45d572a8c5472dac3" => :mountain_lion
-    sha1 "c2d7ce459b09f4ebfa1bdc035e4fddffd1d8df8f" => :lion
+    sha1 "d4c74518254db363f15b9c2211368eb3df856c33" => :yosemite
+    sha1 "1141f9bbb67f3938a3c061bd3adcfc7b7d6a5710" => :mavericks
+    sha1 "684bd946e018dbcd5968301805649ec20bc4a496" => :mountain_lion
   end
 
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "libtool" => :build
+  depends_on "pkg-config" => :build
   depends_on "nasm" => :build
+  depends_on "libpng" => :optional
 
   keg_only "mozjpeg is not linked to prevent conflicts with the standard libjpeg."
 
   def install
-    system "autoreconf", "-i"
+    system "autoreconf", "-i" if build.head?
     system "./configure", "--prefix=#{prefix}",
                           "--disable-dependency-tracking",
                           "--with-jpeg8"
@@ -30,9 +33,9 @@ class Mozjpeg < Formula
   end
 
   test do
-    system "#{bin}/jpegtran", "-crop", "500x500+200+500",
+    system "#{bin}/jpegtran", "-crop", "1x1",
                               "-transpose", "-optimize",
-                              "-outfile", "test.jpg",
-                              "/System/Library/CoreServices/DefaultDesktop.jpg"
+                              "-outfile", "out.jpg",
+                              test_fixtures("test.jpg")
   end
 end

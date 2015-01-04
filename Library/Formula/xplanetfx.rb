@@ -2,15 +2,16 @@ require "formula"
 
 class Xplanetfx < Formula
   homepage "http://mein-neues-blog.de/xplanetFX/"
-  url "http://repository.mein-neues-blog.de:9000/archive/xplanetfx-2.5.30_all.tar.gz"
-  sha1 "5e22cff99c7869599dab834481a2b1195a6babf7"
-  version "2.5.30"
+  url "http://repository.mein-neues-blog.de:9000/archive/xplanetfx-2.5.33_all.tar.gz"
+  sha1 "48f9ab95aad8ee990aac7465d7f00c1d1931a8eb"
+  version "2.5.33"
 
   bottle do
     cellar :any
-    sha1 "8d700982951f2818f306a33c0f0814242aeefc3e" => :mavericks
-    sha1 "f746580502debead14218ee7b9e0d961080a74f7" => :mountain_lion
-    sha1 "2dd399fb9be5c9d8ef944bbde252fc0c4dd98330" => :lion
+    revision 1
+    sha1 "ab142c8f11896b22de34e9cfbd5bfc61bb847003" => :yosemite
+    sha1 "5efddfd3860035daa87ff251dfa60364f8bf0eb9" => :mavericks
+    sha1 "da82091b30b766eb89d8130f4efe405f02d8d55a" => :mountain_lion
   end
 
   option "without-perlmagick", "Build without PerlMagick support - used to check cloud map downloads"
@@ -36,14 +37,17 @@ class Xplanetfx < Formula
 
     prefix.install "bin", "share"
 
-    sPATH = "#{Formula["coreutils"].opt_prefix}/libexec/gnubin"
-    sPATH += ":#{Formula["gnu-sed"].opt_prefix}/libexec/gnubin" if build.with?("gnu-sed")
-    ENV.prepend_create_path "PERL5LIB", "#{HOMEBREW_PREFIX}/lib/perl5/site_perl/5.16.2" if build.with?("perlmagick")
+    path = "#{Formula["coreutils"].opt_libexec}/gnubin"
+    path += ":#{Formula["gnu-sed"].opt_libexec}/gnubin" if build.with?("gnu-sed")
+    if build.with?("perlmagick")
+      perl_version = `/usr/bin/perl -e 'printf "%vd", $^V;'`
+      ENV.prepend_create_path "PERL5LIB", "#{HOMEBREW_PREFIX}/lib/perl5/site_perl/#{perl_version}"
+    end
     if build.with?("gui")
       ENV.prepend_create_path "PYTHONPATH", "#{HOMEBREW_PREFIX}/lib/python2.7/site-packages/gtk-2.0"
       ENV.prepend_create_path "GDK_PIXBUF_MODULEDIR", "#{HOMEBREW_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders"
     end
-    bin.env_script_all_files(libexec+'bin', :PATH => "#{sPATH}:$PATH", :PYTHONPATH => ENV["PYTHONPATH"], :PERL5LIB => ENV["PERL5LIB"], :GDK_PIXBUF_MODULEDIR => ENV["GDK_PIXBUF_MODULEDIR"])
+    bin.env_script_all_files(libexec+'bin', :PATH => "#{path}:$PATH", :PYTHONPATH => ENV["PYTHONPATH"], :PERL5LIB => ENV["PERL5LIB"], :GDK_PIXBUF_MODULEDIR => ENV["GDK_PIXBUF_MODULEDIR"])
   end
 
   def post_install

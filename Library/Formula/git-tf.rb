@@ -7,7 +7,7 @@ class GitTf < Formula
 
   head do
     url 'https://git01.codeplex.com/gittf', :using => :git
-    depends_on 'maven'
+    depends_on 'maven' => :build
   end
 
   def install
@@ -24,7 +24,7 @@ class GitTf < Formula
     (libexec + "native").install install_prefix + 'native/macosx'
 
     bin.write_exec_script libexec/'git-tf'
-    (share/'doc/git-tf').install Dir['Git-TF_*', 'ThirdPartyNotices*']
+    doc.install Dir['Git-TF_*', 'ThirdPartyNotices*']
   end
 
   def caveats; <<-EOS.undent

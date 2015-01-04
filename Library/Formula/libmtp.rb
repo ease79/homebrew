@@ -2,14 +2,15 @@ require 'formula'
 
 class Libmtp < Formula
   homepage 'http://libmtp.sourceforge.net/'
-  url 'https://downloads.sourceforge.net/project/libmtp/libmtp/1.1.6/libmtp-1.1.6.tar.gz'
-  sha1 'f9e55c75399fc5f4deabcdfa58e1b01b2e6e3283'
+  url "https://downloads.sourceforge.net/project/libmtp/libmtp/1.1.8/libmtp-1.1.8.tar.gz"
+  sha1 "6528da141b9f8a04fc97c0b01cf4f3a6142ff64f"
 
   bottle do
     cellar :any
-    sha1 "7702b0ce097a9a6a100d0b32f3df153d52ff28fb" => :mavericks
-    sha1 "8ceb62bf1932a223bfc3601309f37886d81c6b1f" => :mountain_lion
-    sha1 "6c629f67821477825bfd8f17ecbc1745a308b08e" => :lion
+    revision 1
+    sha1 "efc495ff51c145e3ba7fc788e7381a9b0c75fb37" => :yosemite
+    sha1 "ad318f5a47cbbc64e17bcd5955c11aaeaa03163e" => :mavericks
+    sha1 "9e40ef6dc2e2068ea3bb73fb7e3d901ee58b470d" => :mountain_lion
   end
 
   depends_on "pkg-config" => :build

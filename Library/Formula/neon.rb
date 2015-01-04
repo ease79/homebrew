@@ -4,12 +4,14 @@ class Neon < Formula
   homepage 'http://www.webdav.org/neon/'
   url 'http://www.webdav.org/neon/neon-0.30.0.tar.gz'
   sha1 '9e6297945226f90d66258b7ee05f757ff5cea10a'
+  revision 1
 
   bottle do
     cellar :any
-    sha1 "9e4015e3e27d14ddd8feb4bdc1dc84a01a930bea" => :mavericks
-    sha1 "cb912fbe59f2c4b1b8139989ff9d7ffc1b2210d4" => :mountain_lion
-    sha1 "4d67105dc74e5f4f6f58c542a741cb532257b393" => :lion
+    revision 2
+    sha1 "ed7c8ab5a2126bb63a15b5996c520326d38d316e" => :yosemite
+    sha1 "b3d7e993759808bf9797a26a1d6d12f9e4d72206" => :mavericks
+    sha1 "2273ce25ead7be557b71101303cfda284364cd7b" => :mountain_lion
   end
 
   keg_only :provided_by_osx

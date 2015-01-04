@@ -1,19 +1,21 @@
 require "formula"
 
 class Fig < Formula
-  homepage "http://orchardup.github.io/fig/"
-  url "https://github.com/orchardup/fig/archive/0.5.1.tar.gz"
-  sha1 "38b03a7d823ab3b2662c9c6ada503e28c35e122c"
+  homepage "http://www.fig.sh/"
+  url "https://github.com/docker/fig/archive/1.0.1.tar.gz"
+  sha1 "8044dd8134af1215138c1e878cc1684bac8932d9"
 
   bottle do
     cellar :any
-    sha1 "2f4f64f35b1b51962dd51d1688ce8bd3d43fe936" => :mavericks
-    sha1 "62a8a937bc788f6ca58a61f973f3f6540180eb20" => :mountain_lion
-    sha1 "e75582e827e66be9c90f800e1bf0f19b78558f10" => :lion
+    sha1 "cf37af25e68023c6be1e9b190e144002eb7f68d2" => :yosemite
+    sha1 "f79dda6866edd1de41e28b19b7f0dd28b4f0b176" => :mavericks
+    sha1 "3a3ef310e40669a5a36dd2038c9aac152a990d67" => :mountain_lion
   end
 
   depends_on :python if MacOS.version <= :snow_leopard
   depends_on "libyaml"
+
+  conflicts_with "tutum", :because => "both install `wsdump.py` binaries"
 
   resource "docopt" do
     url "https://pypi.python.org/packages/source/d/docopt/docopt-0.6.1.tar.gz"

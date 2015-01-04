@@ -8,8 +8,14 @@ end
 
 class SigningParty < Formula
   homepage "http://pgp-tools.alioth.debian.org/"
-  url "http://ftp.debian.org/debian/pool/main/s/signing-party/signing-party_1.1.7.orig.tar.gz"
-  sha1 "8bb854eab064b67740a23c44c1bb2eb497d9fdeb"
+  url "http://ftp.debian.org/debian/pool/main/s/signing-party/signing-party_1.1.10.orig.tar.gz"
+  sha1 "909182aaadc2e6e7bd1edefb3722b7b97c9abd86"
+
+  bottle do
+    sha1 "d8214823c908caf3d8793915b1f9a39c040830f2" => :yosemite
+    sha1 "acb48de86cd5524f5ba4631e2d49c03ecc2b4e4c" => :mavericks
+    sha1 "8070e9cebac432ce0033f9b27b439ea2c16acd06" => :mountain_lion
+  end
 
   option 'with-rename-pgpring', 'Install pgpring as pgppubring to avoid conflicting with mutt'
 
@@ -40,6 +46,48 @@ class SigningParty < Formula
     url "http://search.cpan.org/CPAN/authors/id/M/MJ/MJD/Text-Template-1.46.tar.gz"
     mirror "http://search.mcpan.org/CPAN/authors/id/M/MJ/MJD/Text-Template-1.46.tar.gz"
     sha1 "008df9cfa6f9ab8d0b4f38c3e59d4e8679280bc1"
+  end
+
+  resource "Net::IDN::Encode" do
+    url "http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/Net-IDN-Encode-2.200.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/Net-IDN-Encode-2.200.tar.gz"
+    sha1 "f7796a9d0404da8222b2c438668463a013fc1983"
+  end
+
+  resource "MooX::late" do
+    url "http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/MooX-late-0.014.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/MooX-late-0.014.tar.gz"
+    sha1 "d7bbb34c1e2f6ff06a97b404bed7fa2c58bac004"
+  end
+
+  resource "MooX::HandlesVia" do
+    url "http://search.cpan.org/CPAN/authors/id/M/MA/MATTP/MooX-HandlesVia-0.001005.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/M/MA/MATTP/MooX-HandlesVia-0.001005.tar.gz"
+    sha1 "d9e58fca8b26004878de49390941d01d17a98d7f"
+  end
+
+  resource "Type::Tiny" do
+    url "http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/Type-Tiny-1.000005.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/Type-Tiny-1.000005.tar.gz"
+    sha1 "95119f0e9565f4cda685902d614a21484765970a"
+  end
+
+  resource "Exporter::Tiny" do
+    url "http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/Exporter-Tiny-0.042.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/T/TO/TOBYINK/Exporter-Tiny-0.042.tar.gz"
+    sha1 "3a3ac1affabcfce1d1bf8cffee2e7a8c78780e54"
+  end
+
+  resource "Data::Perl" do
+    url "http://search.cpan.org/CPAN/authors/id/M/MA/MATTP/Data-Perl-0.002009.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/M/MA/MATTP/Data-Perl-0.002009.tar.gz"
+    sha1 "e62244f9e09c1db528992bbf55954a1e4dc54067"
+  end
+
+  resource "CPAN::Meta::Requirements" do
+    url "http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/CPAN-Meta-Requirements-2.126.tar.gz"
+    mirror "http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/CPAN-Meta-Requirements-2.126.tar.gz"
+    sha1 "b73123f5fcf199e2bdc31aaae72a8f70740d439f"
   end
 
   # gpgparticipants data on OS X behaves differently from linux version
@@ -145,7 +193,7 @@ index aaf97bb..7a6bd38 100755
 +++ b/gpgparticipants/gpgparticipants
 @@ -65,7 +65,7 @@ title=$(echo "$5"|tr a-z A-Z|sed 's/\(.\)/\1 /g')
  [ "$output" = - ] && output=/path/to/ksp-file.txt || { exec > "$output"; }
- 
+
  # Date of event
 -LC_ALL=C date --date="$date" +"%A, %B %e, %Y;  %H:%M"
 +LC_ALL=C date -j -f "%Y%m%d %H%M" "$date" +"%A, %B %e, %Y;  %H:%M"

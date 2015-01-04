@@ -1,28 +1,27 @@
-require 'formula'
-
 # Upstream project has requested we use a mirror as the main URL
 # https://github.com/Homebrew/homebrew/pull/21419
 class Xz < Formula
-  homepage 'http://tukaani.org/xz/'
-  url 'http://fossies.org/linux/misc/xz-5.0.5.tar.gz'
-  mirror 'http://tukaani.org/xz/xz-5.0.5.tar.gz'
-  sha256 '5dcffe6a3726d23d1711a65288de2e215b4960da5092248ce63c99d50093b93a'
+  homepage "http://tukaani.org/xz/"
+  url "http://fossies.org/linux/misc/xz-5.2.0.tar.gz"
+  mirror "http://tukaani.org/xz/xz-5.2.0.tar.gz"
+  sha256 "231ef369982240bb20ed7cffa52bb12a4a297ce6871f480ab85e8a7ba98bf3d6"
 
   bottle do
     cellar :any
-    revision 3
-    sha1 "d42b938770762ca46351f73f247b4b092d91c2ae" => :mavericks
-    sha1 "16eb170fe01074ed3f49eb14c37f0608f208f555" => :mountain_lion
-    sha1 "3052beb5c60568455182ee28129ca47648fd0659" => :lion
+    sha1 "3ff6acf698890f64dd8c78e447f5f2e329d2d77a" => :yosemite
+    sha1 "b4d71a6a28aaf4e0f85d54d6f5221e9548130b60" => :mavericks
+    sha1 "80f2f7c33a227f57daa63fe5beb8e1f90c8ce6e9" => :mountain_lion
   end
 
   option :universal
 
   def install
     ENV.universal_binary if build.universal?
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
+                          "--disable-silent-rules",
                           "--prefix=#{prefix}"
-    system "make install"
+    system "make", "install"
   end
 
   test do

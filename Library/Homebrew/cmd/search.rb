@@ -76,6 +76,8 @@ module Homebrew
     %w{Homebrew binary},
     %w{Homebrew python},
     %w{Homebrew php},
+    %w{Homebrew x11},
+    %w{Caskroom cask},
   ]
 
   def query_regexp(query)
@@ -94,7 +96,10 @@ module Homebrew
   end
 
   def search_tap user, repo, rx
-    return [] if (HOMEBREW_LIBRARY/"Taps/#{user.downcase}/homebrew-#{repo.downcase}").directory?
+    if (HOMEBREW_LIBRARY/"Taps/#{user.downcase}/homebrew-#{repo.downcase}").directory? && \
+       "#{user}/#{repo}" != "Caskroom/cask"
+      return []
+    end
 
     results = []
     tree = {}
@@ -113,7 +118,7 @@ module Homebrew
       end
     end
 
-    paths = tree["Formula"] || tree["HomebrewFormula"] || tree["."] || []
+    paths = tree["Formula"] || tree["HomebrewFormula"] || tree["Casks"] || tree["."] || []
     paths.each do |path|
       name = File.basename(path, ".rb")
       results << "#{user}/#{repo}/#{name}" if rx === name

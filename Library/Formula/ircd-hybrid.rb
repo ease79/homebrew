@@ -2,8 +2,14 @@ require "formula"
 
 class IrcdHybrid < Formula
   homepage "http://www.ircd-hybrid.org/"
-  url "https://downloads.sourceforge.net/project/ircd-hybrid/ircd-hybrid/ircd-hybrid-8.1.18/ircd-hybrid-8.1.18.tgz"
-  sha1 "2dbb4a3dfd4b51d9f0cdcb587720c711e2147ff6"
+  url "https://downloads.sourceforge.net/project/ircd-hybrid/ircd-hybrid/ircd-hybrid-8.2.1/ircd-hybrid-8.2.1.tgz"
+  sha1 "43e96d1d3e57f8d867348921a5b225011ab988b2"
+
+  bottle do
+    sha1 "1ac5860e94fac63377994eebada838b4975e5cb2" => :yosemite
+    sha1 "d3150f7395160fc08cd665144288587360d5ee34" => :mavericks
+    sha1 "cbcbb7266548178d080fb3683e7ba8cd203265fa" => :mountain_lion
+  end
 
   # ircd-hybrid needs the .la files
   skip_clean :la
@@ -18,7 +24,7 @@ class IrcdHybrid < Formula
                           "--localstatedir=#{var}",
                           "--sysconfdir=#{etc}",
                           "--enable-openssl=#{Formula["openssl"].opt_prefix}"
-    system "make install"
+    system "make", "install"
     etc.install "doc/reference.conf" => "ircd.conf"
   end
 

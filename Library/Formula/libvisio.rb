@@ -1,15 +1,17 @@
 require "formula"
 
 class Libvisio < Formula
-  homepage "http://www.freedesktop.org/wiki/Software/libvisio/"
-  url "http://dev-www.libreoffice.org/src/libvisio-0.1.0.tar.xz"
+  homepage "https://wiki.documentfoundation.org/DLP/Libraries/libvisio"
+  url "http://dev-www.libreoffice.org/src/libvisio/libvisio-0.1.0.tar.xz"
   sha1 "c82e5c7ad25e513c268032cda9febd01b8879504"
+  revision 3
 
   bottle do
     cellar :any
-    sha1 "5b7af3a34301558c02ba25bf09087d44479427e9" => :mavericks
-    sha1 "19286ead4b765628712f516e4bb161c4b7caf2ff" => :mountain_lion
-    sha1 "6bac7cd8dce1f27c0acfc41e74348333abcb1f43" => :lion
+    revision 1
+    sha1 "99ed3132f737611f552f499c593171b9c5de98f1" => :yosemite
+    sha1 "fe4be3eedf1ecfc4e30c2ced7dba2a8c01483e95" => :mavericks
+    sha1 "100c2d78d59c91ab3f6d77937cc35a669e24d383" => :mountain_lion
   end
 
   depends_on "pkg-config" => :build
@@ -38,8 +40,10 @@ class Libvisio < Formula
       }
     EOS
     system ENV.cxx, "test.cpp", "-o", "test",
-                    "-lrevenge-stream-0.0", "-I#{Formula["librevenge"].include}/librevenge-0.0",
-                    "-lvisio-0.1", "-I#{Formula["libvisio"].include}/libvisio-0.1"
+                    "-lrevenge-stream-0.0",
+                    "-I#{Formula["librevenge"].include}/librevenge-0.0",
+                    "-L#{Formula["librevenge"].lib}",
+                    "-lvisio-0.1", "-I#{include}/libvisio-0.1", "-L#{lib}"
     system "./test"
   end
 end

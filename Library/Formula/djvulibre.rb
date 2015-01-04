@@ -13,14 +13,12 @@ class Djvulibre < Formula
   end
 
   bottle do
-    sha1 "10f62a1f13813f5c730071849bfe0898165c303f" => :mavericks
-    sha1 "7b9fcb62beec891e67d1dbaf19ae3e4d02975917" => :mountain_lion
-    sha1 "96a3c4bd45ed2c2ca4a6efab0f1334326560b891" => :lion
+    revision 1
+    sha1 "306baf176acba6f71f3381a010fa78ff80e62ba6" => :yosemite
+    sha1 "61a53093e18457fb4235cc0afe3717eef851b85e" => :mavericks
   end
 
-  head do
-    url 'git://git.code.sf.net/p/djvu/djvulibre-git'
-  end
+  head 'git://git.code.sf.net/p/djvu/djvulibre-git'
 
   depends_on 'jpeg'
   depends_on 'libtiff'
@@ -34,7 +32,8 @@ class Djvulibre < Formula
   end
 
   test do
-    %x[#{bin}/djvused -e n #{share}/doc/djvu/lizard2002.djvu].chomp == "2" #should show count of 2 pages
+    output = shell_output("#{bin}/djvused -e n #{share}/doc/djvu/lizard2002.djvu")
+    assert_equal "2", output.strip
   end
 end
 

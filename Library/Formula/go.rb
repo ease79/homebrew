@@ -2,15 +2,15 @@ require 'formula'
 
 class Go < Formula
   homepage 'http://golang.org'
-  head 'https://go.googlecode.com/hg/'
-  url 'https://storage.googleapis.com/golang/go1.3.src.tar.gz'
-  version '1.3'
-  sha1 '9f9dfcbcb4fa126b2b66c0830dc733215f2f056e'
+  head 'https://go.googlesource.com/go', :using => :git
+  url 'https://storage.googleapis.com/golang/go1.4.src.tar.gz'
+  version '1.4'
+  sha1 '6a7d9bd90550ae1e164d7803b3e945dc8309252b'
 
   bottle do
-    sha1 "86ad80f44b3114aaf53d5e673777f947d1fac3df" => :mavericks
-    sha1 "54e22253d53cee4b13636e5b673d3e83eeac178a" => :mountain_lion
-    sha1 "f3f9ce904f6d2b136db82683b405265b88fcd0c3" => :lion
+    sha1 "33aa691a93a3c9aa40334e3ce6daa49420696fe4" => :yosemite
+    sha1 "9fa24700a5187fd8272178bd731fb3f9aa485188" => :mavericks
+    sha1 "359fe25e6755c2362d619c01363a7f80ec59efca" => :mountain_lion
   end
 
   option 'cross-compile-all', "Build the cross-compilers and runtime support for all supported platforms"
@@ -18,10 +18,6 @@ class Go < Formula
   option 'without-cgo', "Build without cgo"
 
   def install
-    # install the completion scripts
-    bash_completion.install 'misc/bash/go' => 'go-completion.bash'
-    zsh_completion.install 'misc/zsh/go' => 'go'
-
     # host platform (darwin) must come last in the targets list
     if build.include? 'cross-compile-all'
       targets = [
@@ -76,8 +72,8 @@ class Go < Formula
       http://golang.org/doc/go1.2#go_tools_godoc
 
     To get `go vet` and `go doc` run:
-      go get code.google.com/p/go.tools/cmd/godoc
-      go get code.google.com/p/go.tools/cmd/vet
+      go get golang.org/x/tools/cmd/vet
+      go get golang.org/x/tools/cmd/godoc
 
     You may wish to add the GOROOT-based install location to your PATH:
       export PATH=$PATH:#{opt_libexec}/bin

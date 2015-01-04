@@ -1,13 +1,13 @@
-require "formula"
-
 class Elasticsearch < Formula
   homepage "http://www.elasticsearch.org"
-  url "https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.0.tar.gz"
-  sha1 "f9e02e2cdcb55e7e8c5c60e955f793f68b7dec75"
+  url "https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.2.tar.gz"
+  sha1 "ae381615ec7f657e2a08f1d91758714f13d11693"
+
+  depends_on :java => "1.7"
 
   head do
     url "https://github.com/elasticsearch/elasticsearch.git"
-    depends_on "maven"
+    depends_on "maven" => :build
   end
 
   def cluster_name
@@ -24,13 +24,14 @@ class Elasticsearch < Formula
 
     # Remove Windows files
     rm_f Dir["bin/*.bat"]
+    rm_f Dir["bin/*.exe"]
 
     # Move libraries to `libexec` directory
-    libexec.install Dir['lib/*.jar']
-    (libexec/'sigar').install Dir['lib/sigar/*.{jar,dylib}']
+    libexec.install Dir["lib/*.jar"]
+    (libexec/"sigar").install Dir["lib/sigar/*.{jar,dylib}"]
 
     # Install everything else into package directory
-    prefix.install Dir['*']
+    prefix.install Dir["*"]
 
     # Remove unnecessary files
     rm_f Dir["#{lib}/sigar/*"]
@@ -80,8 +81,6 @@ class Elasticsearch < Formula
     Data:    #{var}/elasticsearch/#{cluster_name}/
     Logs:    #{var}/log/elasticsearch/#{cluster_name}.log
     Plugins: #{var}/lib/elasticsearch/plugins/
-
-    ElasticSearch requires Java 7; you will need to install an appropriate JDK.
     EOS
   end
 
@@ -117,5 +116,9 @@ class Elasticsearch < Formula
         </dict>
       </plist>
     EOS
+  end
+
+  test do
+    system "#{bin}/plugin", "--list"
   end
 end

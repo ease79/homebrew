@@ -2,8 +2,15 @@ require 'formula'
 
 class Unrar < Formula
   homepage 'http://www.rarlab.com'
-  url 'http://www.rarlab.com/rar/unrarsrc-5.1.6.tar.gz'
-  sha1 'af9220d85cb96ce102b7375c1e5e501b64fc89fd'
+  url 'http://www.rarlab.com/rar/unrarsrc-5.2.3.tar.gz'
+  sha1 '31e7dad7424635e7a3ae823b5dd9e50db54393ec'
+
+  bottle do
+    cellar :any
+    sha1 "5c3d060feb9868d4202b1bff08629029d35a4750" => :yosemite
+    sha1 "3ce2295bc0a90243b0c71219c53e95685d79d1ca" => :mavericks
+    sha1 "8e0e4373750950fde98da68cf3ee247ddfb02558" => :mountain_lion
+  end
 
   def install
     system "make"

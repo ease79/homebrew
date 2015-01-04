@@ -4,14 +4,16 @@ class Libmowgli < Formula
   homepage 'http://www.atheme.org/project/mowgli'
   url 'https://github.com/atheme/libmowgli-2/archive/libmowgli-2.0.0.tar.gz'
   sha1 'dd3860fb116c4249456f13cd6c30c55e84388262'
+  revision 1
 
   head 'https://github.com/atheme/libmowgli-2.git'
 
   bottle do
     cellar :any
-    sha1 "b76fc28dec755183ad47fce6333147a66ddd8ba2" => :mavericks
-    sha1 "eebe9cc5140624abc8a4cf7045b2c851d825a203" => :mountain_lion
-    sha1 "3fbb392283fb93a03803ff4bf76b1149a7a57025" => :lion
+    revision 2
+    sha1 "0a3085258a8765dc8e5fbc505073416c1d3c9bb3" => :yosemite
+    sha1 "d282eac279ac76cdb01d355f919c45d41ed0c6c1" => :mavericks
+    sha1 "a9502beb46258594b84b62aef2d970ec05d52456" => :mountain_lion
   end
 
   depends_on "openssl"

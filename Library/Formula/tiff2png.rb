@@ -25,8 +25,7 @@ class Tiff2png < Formula
   end
 
   test do
-    system "#{bin}/tiff2png", \
-      "/System/Library/Frameworks/AppKit.framework/Versions/C/Resources/GrammarDot.tiff"
+    system "#{bin}/tiff2png", test_fixtures("test.tiff")
   end
 end
 

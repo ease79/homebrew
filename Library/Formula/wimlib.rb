@@ -2,18 +2,18 @@ require "formula"
 
 class Wimlib < Formula
   homepage "http://sourceforge.net/projects/wimlib/"
-  url "https://downloads.sourceforge.net/project/wimlib/wimlib-1.7.0.tar.gz"
-  sha1 "7f9bdd44a11f04e1550286b574579f48e2584d5a"
+  url "https://downloads.sourceforge.net/project/wimlib/wimlib-1.7.3.tar.gz"
+  sha1 "3e6633b932dec774fa348511efb1ec505159a481"
 
   bottle do
     cellar :any
-    sha1 "af34c91321fdaaaa256b4dea0082df8be73e8fd7" => :mavericks
-    sha1 "9ea8ca5bb46f8ef3f46e1ca4db544274b94b9582" => :mountain_lion
-    sha1 "664ed90aafc7efb9d175c71078f9fa94a3a9b841" => :lion
+    sha1 "9834abd0fc78c5b6f75a9eef98414fd8084750e3" => :mavericks
+    sha1 "864775795fc1f13367752c9c9d997c2362c54bcb" => :mountain_lion
   end
 
   depends_on "pkg-config" => :build
   depends_on "ntfs-3g"
+  depends_on "openssl"
 
   def install
     system "./configure", "--disable-debug",

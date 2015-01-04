@@ -2,8 +2,8 @@ require 'formula'
 
 class Maven < Formula
   homepage 'http://maven.apache.org/'
-  url 'http://www.apache.org/dyn/closer.cgi?path=maven/maven-3/3.2.2/binaries/apache-maven-3.2.2-bin.tar.gz'
-  sha1 'edc1653038137314f0140b0e62d0e3169432882f'
+  url 'http://www.apache.org/dyn/closer.cgi?path=maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz'
+  sha1 '41009327d5494e0e8970b25b77ffed8934cd7ca1'
 
   def install
     # Remove windows files

@@ -2,8 +2,15 @@ require "formula"
 
 class Disco < Formula
   homepage "http://discoproject.org/"
-  url "https://github.com/discoproject/disco/archive/0.5.2.tar.gz"
-  sha1 "35da28ee8a8a7d06bbe36a739984e8cfd150cf93"
+  url "https://github.com/discoproject/disco/archive/0.5.4.tar.gz"
+  sha1 "43bc8fac5d5d657a81a8d7b628d1f72f97470b6e"
+
+  bottle do
+    cellar :any
+    sha1 "f1a4e9775053971dac6ab3b183ebb13d6928c050" => :yosemite
+    sha1 "286325ec178e1bd06a78127333c835a1bf5a2763" => :mavericks
+    sha1 "da6e23c51a8ca6c353e83724746f0e11dba37a99" => :mountain_lion
+  end
 
   depends_on :python if MacOS.version <= :snow_leopard
   depends_on "erlang"

@@ -1,46 +1,46 @@
-require 'formula'
+require "formula"
 
 class Sqlite < Formula
-  homepage 'http://sqlite.org/'
-  url "http://sqlite.org/2014/sqlite-autoconf-3080500.tar.gz"
-  version "3.8.5"
-  sha1 "7f667e10ccebc26ab2086b8a30cb0a600ca0acae"
+  homepage "http://sqlite.org/"
+  url "https://www.sqlite.org/2014/sqlite-autoconf-3080704.tar.gz"
+  version "3.8.7.4"
+  sha1 "70ca0b8884a6b145b7f777724670566e2b4f3cde"
 
   bottle do
     cellar :any
-    sha1 "13d9a20bffcf45d62a12ee4215259247db25b677" => :mavericks
-    sha1 "4c3bc8ff67ed43b40e3347f910dd85b285906672" => :mountain_lion
-    sha1 "751b317b1cfaaf990e7e74293f2282bc680e6564" => :lion
+    sha1 "89e69674e5617d190a0906cf493d90f2a1d9df23" => :yosemite
+    sha1 "83853093fc0f839124f45440a90948400c18ebf5" => :mavericks
+    sha1 "de28188fb9da216c142922481962628a702e0ce3" => :mountain_lion
   end
 
   keg_only :provided_by_osx, "OS X provides an older sqlite3."
 
   option :universal
-  option 'with-docs', 'Install HTML documentation'
-  option 'without-rtree', 'Disable the R*Tree index module'
-  option 'with-fts', 'Enable the FTS module'
-  option 'with-icu4c', 'Enable the ICU module'
-  option 'with-functions', 'Enable more math and string functions for SQL queries'
+  option "with-docs", "Install HTML documentation"
+  option "without-rtree", "Disable the R*Tree index module"
+  option "with-fts", "Enable the FTS module"
+  option "with-icu4c", "Enable the ICU module"
+  option "with-functions", "Enable more math and string functions for SQL queries"
 
-  depends_on 'readline' => :recommended
-  depends_on 'icu4c' => :optional
+  depends_on "readline" => :recommended
+  depends_on "icu4c" => :optional
 
-  resource 'functions' do
-    url 'http://www.sqlite.org/contrib/download/extension-functions.c?get=25', :using  => :nounzip
-    version '2010-01-06'
-    sha1 'c68fa706d6d9ff98608044c00212473f9c14892f'
+  resource "functions" do
+    url "http://www.sqlite.org/contrib/download/extension-functions.c?get=25", :using  => :nounzip
+    version "2010-01-06"
+    sha1 "c68fa706d6d9ff98608044c00212473f9c14892f"
   end
 
-  resource 'docs' do
-    url "http://sqlite.org/2014/sqlite-doc-3080500.zip"
-    version "3.8.5"
-    sha1 "c5655a4004095c50dc8403661e0ed02fd4191d57"
+  resource "docs" do
+    url "https://www.sqlite.org/2014/sqlite-doc-3080704.zip"
+    version "3.8.7.4"
+    sha1 "734908373118d61338ca020e3c7dcbd1e0ccd985"
   end
 
   def install
-    ENV.append 'CPPFLAGS', "-DSQLITE_ENABLE_RTREE" if build.with? "rtree"
-    ENV.append 'CPPFLAGS', "-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS" if build.with? "fts"
-    ENV.append 'CPPFLAGS', "-DSQLITE_ENABLE_COLUMN_METADATA"
+    ENV.append "CPPFLAGS", "-DSQLITE_ENABLE_RTREE" if build.with? "rtree"
+    ENV.append "CPPFLAGS", "-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS" if build.with? "fts"
+    ENV.append "CPPFLAGS", "-DSQLITE_ENABLE_COLUMN_METADATA"
 
     if build.with? "icu4c"
       icu4c = Formula['icu4c']
@@ -57,7 +57,7 @@ class Sqlite < Formula
     system "make install"
 
     if build.with? "functions"
-      buildpath.install resource('functions')
+      buildpath.install resource("functions")
       system ENV.cc, "-fno-common",
                      "-dynamiclib",
                      "extension-functions.c",
@@ -65,11 +65,11 @@ class Sqlite < Formula
                      *ENV.cflags.to_s.split
       lib.install "libsqlitefunctions.dylib"
     end
-    doc.install resource('docs') if build.with? "docs"
+    doc.install resource("docs") if build.with? "docs"
   end
 
   def caveats
-    if build.with? 'functions' then <<-EOS.undent
+    if build.with? "functions" then <<-EOS.undent
       Usage instructions for applications calling the sqlite3 API functions:
 
         In your application, call sqlite3_enable_load_extension(db,1) to

@@ -1,20 +1,33 @@
-require 'formula'
+require "formula"
 
 class Glew < Formula
-  homepage 'http://glew.sourceforge.net/'
-  url 'https://downloads.sourceforge.net/project/glew/glew/1.10.0/glew-1.10.0.tgz'
-  sha1 'f41b45ca4a630ad1d00b8b87c5f493781a380300'
+  homepage "http://glew.sourceforge.net/"
+  url "https://downloads.sourceforge.net/project/glew/glew/1.11.0/glew-1.11.0.tgz"
+  sha1 "9bb5c87c055acd122a4956112bbb18ee72c38e5c"
 
   bottle do
     cellar :any
-    sha1 "bf2cd460915846eb8d3cdc5e8d7aa3e30aeffe62" => :mavericks
-    sha1 "f43f1961b8baf46d3e22364dbec3de1e42e43846" => :mountain_lion
-    sha1 "482bc295f55ce52c9397c86b2e8d50940c4c5efc" => :lion
+    revision 2
+    sha1 "0f140259d5cb5525153b32102220432fefba1bee" => :yosemite
+    sha1 "ab31a942adaf43f20cea1fd39d1a04949615c2de" => :mavericks
+    sha1 "0ea8a4b4ec385c39eb52732ce8527f68410e35da" => :mountain_lion
   end
 
+  option :universal
+
   def install
-    inreplace "glew.pc.in", "Requires: glu", ""
-    system "make", "GLEW_DEST=#{prefix}", "all"
-    system "make", "GLEW_DEST=#{prefix}", "install.all"
+    # Makefile directory race condition on lion
+    ENV.deparallelize
+
+    if build.universal?
+      ENV.universal_binary
+
+      # Do not strip resulting binaries; https://sourceforge.net/p/glew/bugs/259/
+      ENV["STRIP"] = ""
+    end
+
+    inreplace "glew.pc.in", "Requires: @requireslib@", ""
+    system "make", "GLEW_PREFIX=#{prefix}", "GLEW_DEST=#{prefix}", "all"
+    system "make", "GLEW_PREFIX=#{prefix}", "GLEW_DEST=#{prefix}", "install.all"
   end
 end

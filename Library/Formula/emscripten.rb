@@ -1,19 +1,19 @@
 require "formula"
 
 class Emscripten < Formula
-  homepage "http://emscripten.org"
-  url "https://github.com/kripken/emscripten/archive/1.21.1.tar.gz"
-  sha1 "198c32b7e49ce640ad7a17506ce99cb1b044de06"
-
-  head "https://github.com/kripken/emscripten.git", :branch => "incoming"
+  homepage "https://kripken.github.io/emscripten-site/"
+  url "https://github.com/kripken/emscripten/archive/1.28.0.tar.gz"
+  sha1 "6d90ed5bb4aa3b54a626e451937754a9ae34650f"
 
   bottle do
-    sha1 "f7e6beff033508e544e43f2103a81cd2389fa3b8" => :mavericks
-    sha1 "6beed81c6749348339649bb9b30f1bf687b9a4de" => :mountain_lion
-    sha1 "a3127fd2bb4996f022ab1e73f86a15b923ca3a3a" => :lion
+    sha1 "a5fe0b92e8d915988ca5bce83b4f5d739a1f154b" => :yosemite
+    sha1 "c59c1306fcba0acc6ab4f749977f65dd52ad3c2f" => :mavericks
+    sha1 "7fd747e61f0fc764124c27b20c5d3625496b3297" => :mountain_lion
   end
 
   head do
+    url "https://github.com/kripken/emscripten.git", :branch => "incoming"
+
     resource "fastcomp" do
       url "https://github.com/kripken/emscripten-fastcomp.git", :branch => "incoming"
     end
@@ -25,16 +25,17 @@ class Emscripten < Formula
 
   stable do
     resource "fastcomp" do
-      url "https://github.com/kripken/emscripten-fastcomp/archive/1.21.0.tar.gz"
-      sha1 "d468ca3ea4b3ed02b3e20ba86b781f028c2514b0"
+      url "https://github.com/kripken/emscripten-fastcomp/archive/1.28.0.tar.gz"
+      sha1 "fd8cb60d7d5c33d435a0a772084baee634d6ce61"
     end
 
     resource "fastcomp-clang" do
-      url "https://github.com/kripken/emscripten-fastcomp-clang/archive/1.21.0.tar.gz"
-      sha1 "7974f7cc0646534fd226ae447b962a11d77a7c03"
+      url "https://github.com/kripken/emscripten-fastcomp-clang/archive/1.28.0.tar.gz"
+      sha1 "d01ab3763194c04c78c30dfa632bf52a90bbdb71"
     end
   end
 
+  depends_on :python if MacOS.version <= :snow_leopard
   depends_on "node"
   depends_on "closure-compiler" => :optional
   depends_on "yuicompressor"
@@ -80,7 +81,8 @@ class Emscripten < Formula
   end
 
   def caveats; <<-EOS.undent
-    Manually set LLVM_ROOT to \"#{opt_prefix}/libexec/llvm/bin\"
+    Manually set LLVM_ROOT to
+      #{opt_libexec}/llvm/bin
     in ~/.emscripten after running `emcc` for the first time.
     EOS
   end

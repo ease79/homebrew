@@ -2,9 +2,16 @@ require "formula"
 
 class Pianobar < Formula
   homepage "https://github.com/PromyLOPh/pianobar/"
-  url "https://github.com/PromyLOPh/pianobar/archive/2014.06.08.tar.gz"
-  sha256 "55f0105b8bf20af0a74f3ef2f928e81d9fdccc50fe86548f7db7992f523c3529"
+  url "http://6xq.net/projects/pianobar/pianobar-2014.09.28.tar.bz2"
+  sha256 "6bd10218ad5d68c4c761e02c729627d2581b4a6db559190e7e52dc5df177e68f"
   head "https://github.com/PromyLOPh/pianobar.git"
+
+  bottle do
+    cellar :any
+    sha1 "e066326185eb541a755e6ba41842e5593d3f00ee" => :mavericks
+    sha1 "46ecff61b1eddb11ffd5d7dbb7f099efc84777a4" => :mountain_lion
+    sha1 "89df962c29ad93849cadae65251c873aabec3844" => :lion
+  end
 
   depends_on "pkg-config" => :build
   depends_on "libao"

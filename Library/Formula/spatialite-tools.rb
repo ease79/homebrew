@@ -2,8 +2,16 @@ require 'formula'
 
 class SpatialiteTools < Formula
   homepage 'https://www.gaia-gis.it/fossil/spatialite-tools/index'
-  url 'http://www.gaia-gis.it/gaia-sins/spatialite-tools-sources/spatialite-tools-4.1.1.tar.gz'
-  sha1 '0af3de926b8086287ef31ebba5d8327ee18d14bd'
+  url "http://www.gaia-gis.it/gaia-sins/spatialite-tools-4.2.0.tar.gz"
+  sha1 "de07042afa734b17c840318fa8772466f53f1831"
+
+  bottle do
+    cellar :any
+    revision 3
+    sha1 "4598206e95a93f76ec379b928e539ab037db3927" => :yosemite
+    sha1 "67d0c0113b0723b3cab1e893ac57668f75d7ad7c" => :mavericks
+    sha1 "ad61069c865b7c11fa04b0fcbcf105a3f95edacd" => :mountain_lion
+  end
 
   depends_on 'pkg-config' => :build
   depends_on 'libspatialite'
@@ -19,6 +27,10 @@ class SpatialiteTools < Formula
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
-    system "make install"
+    system "make", "install"
+  end
+
+  test do
+    system "#{bin}/spatialite --version"
   end
 end

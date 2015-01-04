@@ -2,8 +2,8 @@ require "formula"
 
 class Hadoop < Formula
   homepage "http://hadoop.apache.org/"
-  url "http://www.apache.org/dyn/closer.cgi?path=hadoop/common/hadoop-2.4.1/hadoop-2.4.1.tar.gz"
-  sha1 "bec3d911fd0b84cd4a7130fb212125c7ae51e878"
+  url "http://www.apache.org/dyn/closer.cgi?path=hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz"
+  sha1 "5b5fb72445d2e964acaa62c60307168c009d57c5"
 
   def install
     rm_f Dir["bin/*.cmd", "sbin/*.cmd", "libexec/*.cmd", "etc/hadoop/*.cmd"]

@@ -1,22 +1,24 @@
-require 'formula'
-
 class Moreutils < Formula
-  homepage 'http://packages.debian.org/unstable/utils/moreutils'
-  url 'http://mirrors.kernel.org/debian/pool/main/m/moreutils/moreutils_0.51.tar.gz'
-  mirror 'http://ftp.us.debian.org/debian/pool/main/m/moreutils/moreutils_0.51.tar.gz'
-  sha1 '374b8c3bea962bbcde4a8158051c570a1fec6811'
+  homepage "http://joeyh.name/code/moreutils/"
+  url "http://mirrors.kernel.org/debian/pool/main/m/moreutils/moreutils_0.52.tar.gz"
+  mirror "http://ftp.us.debian.org/debian/pool/main/m/moreutils/moreutils_0.52.tar.gz"
+  sha1 "32047f935178b490a12c370d8f695f1273dc5895"
 
   bottle do
-    cellar :any
-    sha1 "21fa332179c54179b9581ec1fd5eae00eefbf9da" => :mavericks
-    sha1 "b7b88be54b3cd5659a720dd899ceacd790414e20" => :mountain_lion
-    sha1 "f873a5e0b83b859899c98126871d0fa4bb04b8b9" => :lion
+    revision 2
+    sha1 "09c41223be308962ffb8014fdbcedba9c9288a8c" => :yosemite
+    sha1 "07383e8aa340c226800d36fb0d2107073c05392d" => :mavericks
+    sha1 "7ed2b97a47512e47e7a74ee11ebf8b3cc5d1697e" => :mountain_lion
   end
 
   depends_on "docbook-xsl" => :build
 
-  conflicts_with 'parallel',
-    :because => "both install a 'parallel' executable."
+  option "without-parallel", "Omit the 'parallel' tool. Allows installation of GNU parallel from 'parallel' formula."
+
+  if build.with? "parallel"
+    conflicts_with "parallel",
+      :because => "both install a 'parallel' executable. See the '--without-parallel' option"
+  end
 
   conflicts_with 'task-spooler',
     :because => "both install a 'ts' executable."
@@ -49,9 +51,20 @@ class Moreutils < Formula
     inreplace "Makefile",
               "/usr/share/xml/docbook/stylesheet/docbook-xsl",
               "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl"
+    if build.without? "parallel"
+      inreplace "Makefile", /^BINS=.*\Kparallel/, ""
+      inreplace "Makefile", /^MANS=.*\Kparallel\.1/, ""
+    end
     system "make", "all"
     system "make", "check"
     system "make", "install", "PREFIX=#{prefix}"
     bin.env_script_all_files(libexec+"bin", :PERL5LIB => ENV["PERL5LIB"])
+  end
+
+  test do
+    pipe_output("#{bin}/isutf8", "hello")
+    assert $?.success?
+    pipe_output("#{bin}/isutf8", "\xca\xc0\xbd\xe7")
+    assert (!$?.success?)
   end
 end

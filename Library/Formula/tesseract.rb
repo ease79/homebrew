@@ -4,20 +4,28 @@ class Tesseract < Formula
   homepage 'http://code.google.com/p/tesseract-ocr/'
   url 'https://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.02.tar.gz'
   sha1 'a950acf7b75cf851de2de787e9abb62c58ca1827'
-  revision 2
+  revision 3
 
   bottle do
-    sha1 "5949807031e5d1a5c4382ed93afa06e684be104f" => :mavericks
-    sha1 "44298a87cc05b956cb9b8feb85559530cac02ad9" => :mountain_lion
-    sha1 "5beafc2400bb170185c7934ed69749c9b8ef8c99" => :lion
+    sha1 "9a4e5a35ac9f1e84990598411763075530691cb8" => :yosemite
+    sha1 "41c1a04692d03564c59b86cf1067554934fad290" => :mavericks
+    sha1 "2333fe903cfd1b51b1c5e7758c6a033747a37c57" => :mountain_lion
+  end
+
+  devel do
+    url 'https://drive.google.com/uc?id=0B7l10Bj_LprhSGN2bTYwemVRREU&export=download'
+    sha1 '5bd12482a69f0a1fdf3c9e0d652de08db763ee93'
+    version '3.03rc1'
+
+    needs :cxx11
   end
 
   head do
-    url "http://tesseract-ocr.googlecode.com/svn/trunk"
+    url 'https://code.google.com/p/tesseract-ocr/', :using => :git
 
-    depends_on :autoconf
-    depends_on :automake
-    depends_on :libtool
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
     depends_on "pkg-config" => :build
   end
 
@@ -123,6 +131,8 @@ class Tesseract < Formula
     # explicitly state leptonica header location, as the makefile defaults to /usr/local/include,
     # which doesn't work for non-default homebrew location
     ENV["LIBLEPT_HEADERSDIR"] = HOMEBREW_PREFIX/"include"
+
+    ENV.cxx11 if build.devel?
 
     system "./autogen.sh" if build.head?
     system "./configure", "--disable-dependency-tracking", "--prefix=#{prefix}"

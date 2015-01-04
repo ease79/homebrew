@@ -8,10 +8,10 @@ class Cloog < Formula
 
   bottle do
     cellar :any
-    revision 1
-    sha1 '38afdce382abcd3c46fb94af7eb72e87d87859d4' => :mavericks
-    sha1 'd6984ce335cf7b8eb482cdd4f0301c6583b00073' => :mountain_lion
-    sha1 'fd707268c3e5beafa9b98a768f7064d5b9699178' => :lion
+    revision 2
+    sha1 "65900e9655ab8f444ecf7edf4118caa01ca56ddb" => :yosemite
+    sha1 "851f64756bb082a5a354e0992976acd70cfdacbf" => :mavericks
+    sha1 "06252f0a9c453818c319b21647ebaa9a26c3f4ac" => :mountain_lion
   end
 
   head do
@@ -61,11 +61,7 @@ class Cloog < Formula
       0
     EOS
 
-    require 'open3'
-    Open3.popen3("#{bin}/cloog", "/dev/stdin") do |stdin, stdout, _|
-      stdin.write(cloog_source)
-      stdin.close
-      assert_match /Generated from \/dev\/stdin by CLooG/, stdout.read
-    end
+    output = pipe_output("#{bin}/cloog /dev/stdin", cloog_source)
+    assert_match /Generated from \/dev\/stdin by CLooG/, output
   end
 end

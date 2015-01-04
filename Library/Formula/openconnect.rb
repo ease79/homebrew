@@ -2,13 +2,13 @@ require "formula"
 
 class Openconnect < Formula
   homepage "http://www.infradead.org/openconnect.html"
-  url "ftp://ftp.infradead.org/pub/openconnect/openconnect-6.00.tar.gz"
-  sha1 "405f0563a82660fa492d8c9ad248198adb8793f9"
+  url "ftp://ftp.infradead.org/pub/openconnect/openconnect-7.01.tar.gz"
+  sha1 "69edfa8d4af93ef33e90b21f25f2949d1997c83a"
 
   bottle do
-    sha1 "abff92f7f22f41eb8b28465819009907a243099b" => :mavericks
-    sha1 "3953bb2cad981dda52a3cac1bbb81331f8c2ff5c" => :mountain_lion
-    sha1 "6594e0676a47a8b416388da8508780f251992ab8" => :lion
+    sha1 "4b2a69e83336d0817e7a5e3a1a3360be6caadeb2" => :yosemite
+    sha1 "a2149452cb673b6e16042bc607a80369fde91589" => :mavericks
+    sha1 "b59dc9fdf8b070bd897b1d879b791635cb0d1dd7" => :mountain_lion
   end
 
   head do
@@ -25,10 +25,11 @@ class Openconnect < Formula
   depends_on "openssl" if build.without? "gnutls"
   depends_on "gnutls" => :optional
   depends_on "oath-toolkit" => :optional
+  depends_on "stoken" => :optional
 
   resource "vpnc-script" do
-    url "http://git.infradead.org/users/dwmw2/vpnc-scripts.git/blob_plain/a78b3ddfc56ab457104c88e94dca72d8738f4fad:/vpnc-script"
-    sha1 "9516b6e303392cfb5518de3f44767f226c690a1c"
+    url "http://git.infradead.org/users/dwmw2/vpnc-scripts.git/blob_plain/df5808b301ba767578ffbec966db3b9ff154f588:/vpnc-script"
+    sha1 "c4cb07222ed5b6c4a52f5c094dec9933ade87344"
   end
 
   def install
@@ -50,13 +51,5 @@ class Openconnect < Formula
 
     system "./configure", *args
     system "make install"
-  end
-
-  def caveats; <<-EOS.undent
-    OpenConnect requires the use of a TUN/TAP driver.
-
-    You can download one at http://tuntaposx.sourceforge.net/
-    and install it prior to running OpenConnect.
-    EOS
   end
 end

@@ -2,8 +2,8 @@ require 'formula'
 
 class Jena < Formula
   homepage 'http://jena.apache.org/'
-  url 'http://www.apache.org/dist/jena/binaries/apache-jena-2.11.2.tar.gz'
-  sha1 'f27c7a2629d07a443f4f2bdfccf1c62397666fd2'
+  url 'http://archive.apache.org/dist/jena/binaries/apache-jena-2.12.1.tar.gz'
+  sha1 '4493a893b12b119d89d991d6d9c1f11f0700139b'
 
   def shim_script target
     <<-EOS.undent

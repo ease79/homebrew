@@ -5,15 +5,15 @@ class Cgrep < Formula
   include Language::Haskell::Cabal
 
   homepage "https://github.com/awgn/cgrep"
-  url "https://github.com/awgn/cgrep/archive/v6.4.4.tar.gz"
-  sha1 "d36eef5d93e660df971a9f74d4ffff6ed6fab710"
-  head "https://github.com/awgn/cgrep.git", :branch => "master"
+  url "https://github.com/awgn/cgrep/archive/v6.4.9.tar.gz"
+  sha1 "0b5bc5bb96b2c70a7353ac036ce5949bbe2a9bc1"
+  head "https://github.com/awgn/cgrep.git"
 
   bottle do
     cellar :any
-    sha1 "422737ceaee66f521d60c163dcf663d25c2b430a" => :mavericks
-    sha1 "e986ec29104895e0554c3599ac8eebcc6914a67d" => :mountain_lion
-    sha1 "660b2e1d0f6d15e6d7294a464d26b866bcd0030b" => :lion
+    sha1 "08b871722472f4d2ee246ca59cf9266e7f37f78a" => :yosemite
+    sha1 "cd182ff755db1210bba15dce69d5cf90acfa9e82" => :mavericks
+    sha1 "57d998d3e8dfc19fc7d9fdb67e9ebf92e9e5ed26" => :mountain_lion
   end
 
   depends_on "ghc" => :build
